@@ -17,7 +17,13 @@
 	let currentTimestamp: number = 0;
 	let preloadThumbnail: string;
 
+	let cdnURL: string = '';
+
 	onMount(() => {
+		const customCdnURL = prompt('Enter CDN URL (empty for default)');
+		if (customCdnURL) {
+			cdnURL = customCdnURL;
+		}
 		socket = initVideoPlayerWebsocket();
 
 		//when the socket is connected
@@ -45,7 +51,7 @@
 		});
 
 		socket.on('preloadNextVideo', async (d: { videoId: string }) => {
-			preloadThumbnail = getThumbnailURL(d.videoId);
+			preloadThumbnail = getThumbnailURL(d.videoId, cdnURL);
 			console.log('preloadNextVideo', d.videoId);
 		});
 	});
@@ -79,11 +85,12 @@
 
 <div class="z-50 w-screen h-screen bg-black absolute top-0 left-0 items-center justify-center flex">
 	{#if wsConnected}
-		{#await getVideoURL(currentVideoId) then url}
+		{#await getVideoURL(currentVideoId, cdnURL) then url}
 			{#if url}
 				<video class="z-50 w-screen h-screen" bind:this={video} controls
 							 src={url} preload="metadata" autoplay on:timeupdate={timeUpdateHandler}
-							 on:ended={videoEndHandler} poster={getThumbnailURL(currentVideoId)} on:play={videoStartHandler}></video>
+							 on:ended={videoEndHandler} poster={getThumbnailURL(currentVideoId, cdnURL)}
+							 on:play={videoStartHandler}></video>
 			{/if}
 
 		{/await}

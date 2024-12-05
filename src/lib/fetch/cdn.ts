@@ -4,22 +4,21 @@ export interface VideoInfo {
 	videoId: string;
 }
 
-export async function fetchFileLists() {
-	const response = await fetch('/cdn/video-info');
+export async function fetchFileLists(url: string = '') {
+	const response = await fetch(url + '/cdn/video-info');
 	return await response.json();
 }
 
-export function getThumbnailURL(videoId: string) {
-	return '/cdn/thumbnail/' + videoId;
+export function getThumbnailURL(videoId: string, url: string = '') {
+	return url + '/cdn/thumbnail/' + videoId;
 }
 
-export async function getVideoURL(videoId: string) {
+export async function getVideoURL(videoId: string, url: string = '') {
 	const videoFile = await fetchVideoInfo(videoId);
-	return '/cdn/videos/' + videoFile.filename;
+	return url + '/cdn/videos/' + videoFile.filename;
 }
 
-export async function fetchVideoInfo(videoId: string): Promise<VideoInfo> {
-	const response = await fetch(`/cdn/video-info/${videoId}`);
-	console.log(response);
+export async function fetchVideoInfo(videoId: string, url: string = ''): Promise<VideoInfo> {
+	const response = await fetch(`${url}/cdn/video-info/${videoId}`);
 	return await response.json();
 }
