@@ -120,7 +120,7 @@
 <div class="flex items-center justify-center relative">
 	{#if wsConnected}
 		{#if isSubmitting && !questionSubmitted}
-			<div class="flex flex-col items-center drop-shadow-xl rounded-xl w-[80%] bg-[#1e1e1e] text-gray-200 p-6" }>
+			<div class="flex flex-col items-center drop-shadow-xl rounded-xl w-[80%] bg-[#1e1e1e] text-gray-200 p-6">
 				<QuizRemainingTimeBar maxDuration={currentQuiz.submittingDuration} remainingDuration={remainingDuration} />
 				<span class="text-xl font-medium text-white p-6">{currentQuiz.questionText}</span>
 				<QuizAnswerSelection options={currentQuiz.options} clickCallback={onSubmitting} />
