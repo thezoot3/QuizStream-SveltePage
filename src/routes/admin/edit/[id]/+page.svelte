@@ -94,40 +94,43 @@
 {#if createQuiz}
 	<CreateQuiz bind:presetData={presetQuizData} cancel={cancelCreateHandler} submit={submitQuiz} />
 {/if}
-<div class="grid grid-cols-3 grid-rows-4 gap-8 w-[80%] h-[80%]">
-	<div class="col-span-2 row-span-3 w-full gap-4 flex flex-col">
+{#if data.program}
+	<div class="grid grid-cols-3 grid-rows-4 gap-8 w-[80%] h-[80%]">
+		<div class="col-span-2 row-span-3 w-full gap-4 flex flex-col">
 		<span class="text-2xl font-semibold text-[#999999]">
 			Media Preview
 			{#if selectedVideo}
 				({selectedVideo})
 			{/if}
 		</span>
-		<PreviewMonitor videoId={selectedVideo} createQuizHandler={createNewQuizByTimestampHandler} editing={true} />
-	</div>
-	<div class="col-span-1 row-span-3 w-full gap-4 flex flex-col">
-		<div class="flex justify-between items-center">
-			<span class="text-2xl font-semibold text-[#999999]">Quizzes</span>
-			<button class="text-2xl" on:click={createNewQuiz}>
-				<PlusIcon />
+			<PreviewMonitor videoId={selectedVideo} createQuizHandler={createNewQuizByTimestampHandler} editing={true} />
+		</div>
+		<div class="col-span-1 row-span-3 w-full gap-4 flex flex-col">
+			<div class="flex justify-between items-center">
+				<span class="text-2xl font-semibold text-[#999999]">Quizzes</span>
+				<button class="text-2xl" on:click={createNewQuiz}>
+					<PlusIcon />
+				</button>
+			</div>
+			<QuizList quizIdList={data.program.quizList} editQuizHandler={editHandler} deleteQuizHandler={deleteHandler} />
+		</div>
+		<div class="col-span-2 row-span-1 w-full h-full flex flex-col gap-4">
+			<div class="flex justify-between items-center w-full">
+				<span class="text-2xl font-semibold text-[#999999]">Media Pools</span>
+				<button class="text-2xl" on:click={uploadHandler}>
+					<PlusIcon />
+				</button>
+			</div>
+			<MediaPools bind:selected={selectedVideo} videoInfo={videoInfo} />
+		</div>
+		<div class="col-span-1 row-span-1 w-full h-full rounded-xl flex flex-col gap-4">
+			<span class="text-xl font-semibold text-[#999999]">Last Modified On: </span>
+			<button on:click={startHandler} class="flex justify-center items-center h-full p-4 bg-[#306844] rounded-lg">
+				<span class="text-4xl text-gray-300">
+					<PlayIcon />
+				</span>
 			</button>
 		</div>
-		<QuizList quizIdList={data.program.quizList} editQuizHandler={editHandler} deleteQuizHandler={deleteHandler} />
 	</div>
-	<div class="col-span-2 row-span-1 w-full h-full flex flex-col gap-4">
-		<div class="flex justify-between items-center w-full">
-			<span class="text-2xl font-semibold text-[#999999]">Media Pools</span>
-			<button class="text-2xl" on:click={uploadHandler}>
-				<PlusIcon />
-			</button>
-		</div>
-		<MediaPools bind:selected={selectedVideo} videoInfo={videoInfo} />
-	</div>
-	<div class="col-span-1 row-span-1 w-full h-full rounded-xl flex flex-col gap-4">
-		<span class="text-xl font-semibold text-[#999999]">Last Modified On: </span>
-		<div class="flex justify-center items-center h-full p-4 bg-[#306844] rounded-lg">
-			<button on:click={startHandler} class="text-4xl text-gray-300">
-				<PlayIcon />
-			</button>
-		</div>
-	</div>
-</div>
+
+{/if}
