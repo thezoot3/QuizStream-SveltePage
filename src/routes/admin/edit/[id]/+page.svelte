@@ -9,6 +9,8 @@
 	import PlusIcon from '../../../../static/PlusIcon.svelte';
 	import { fetchFileLists, type VideoInfo } from '$lib/fetch/cdn';
 	import { onMount } from 'svelte';
+	import { createProgramProgress } from '$lib/fetch/programProgress';
+	import { goto } from '$app/navigation';
 
 	export let data: {
 		program: Program;
@@ -80,6 +82,14 @@
 	onMount(async () => {
 		videoInfo = await fetchFileLists();
 	});
+
+	async function startHandler() {
+		const joinCode = prompt('Enter Join Code');
+		if (joinCode) {
+			const progress = await createProgramProgress({ program: data.program._id, joinCode });
+			await goto('/admin/host/' + progress._id);
+		}
+	}
 </script>
 {#if createQuiz}
 	<CreateQuiz bind:presetData={presetQuizData} cancel={cancelCreateHandler} submit={submitQuiz} />
@@ -115,7 +125,9 @@
 	<div class="col-span-1 row-span-1 w-full h-full rounded-xl flex flex-col gap-4">
 		<span class="text-xl font-semibold text-[#999999]">Last Modified On: </span>
 		<div class="flex justify-center items-center h-full p-4 bg-[#306844] rounded-lg">
-			<span class="text-4xl text-gray-300"><PlayIcon /></span>
+			<button on:click={startHandler} class="text-4xl text-gray-300">
+				<PlayIcon />
+			</button>
 		</div>
 	</div>
 </div>

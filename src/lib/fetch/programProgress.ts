@@ -52,3 +52,17 @@ export async function fetchProgramProgress(
 	const response = await fetchFunc(`${API_URL}/${id}`);
 	return await response.json();
 }
+
+export async function createProgramProgress(
+	programProgress: { program: string; joinCode: string },
+	fetchFunc: typeof fetch = fetch
+): Promise<ProgramProgress> {
+	const response = await fetchFunc(API_URL, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(programProgress)
+	});
+	return await response.json();
+}
