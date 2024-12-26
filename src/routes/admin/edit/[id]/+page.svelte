@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import { createProgramProgress } from '$lib/fetch/programProgress';
 	import { goto } from '$app/navigation';
+	import RefreshIcon from '../../../../static/RefreshIcon.svelte';
 
 	export let data: {
 		program: Program;
@@ -111,7 +112,11 @@
 				<button class="text-2xl" on:click={createNewQuiz}>
 					<PlusIcon />
 				</button>
+				<button class="text-2xl" on:click={async () => {data.program = await fetchProgram(data.program._id)}}>
+					<RefreshIcon />
+				</button>
 			</div>
+			data.program = await fetchProgram(data.program._id);
 			<QuizList quizIdList={data.program.quizList} editQuizHandler={editHandler} deleteQuizHandler={deleteHandler} />
 		</div>
 		<div class="col-span-2 row-span-1 w-full h-full flex flex-col gap-4">
