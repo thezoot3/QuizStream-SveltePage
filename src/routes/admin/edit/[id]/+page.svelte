@@ -67,7 +67,7 @@
 			if (file) {
 				const formData = new FormData();
 				formData.append('video', file);
-				fetch('/cdn/upload', {
+				fetch('https://quizalt.seda.club/cdn/upload', {
 					method: 'POST',
 					body: formData
 				}).then(res => res.json()).then(async (data) => {
