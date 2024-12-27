@@ -12,6 +12,7 @@
 	import { createProgramProgress } from '$lib/fetch/programProgress';
 	import { goto } from '$app/navigation';
 	import RefreshIcon from '../../../../static/RefreshIcon.svelte';
+	import RoomIcon from '../../../../static/RoomIcon.svelte';
 
 	export let data: {
 		program: Program;
@@ -130,8 +131,8 @@
 		<div class="col-span-1 row-span-1 w-full h-full rounded-xl flex flex-col gap-4">
 			<span class="text-xl font-semibold text-[#999999]">Last Modified On: </span>
 			<button on:click={startHandler} class="flex justify-center items-center h-full p-4 bg-[#306844] rounded-lg">
-				<span class="text-4xl text-gray-300">
-					<PlayIcon />
+				<span class="text-5xl text-gray-300">
+					<RoomIcon />
 				</span>
 			</button>
 		</div>
