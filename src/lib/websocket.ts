@@ -1,21 +1,21 @@
 import { connect, io } from 'socket.io-client';
 
 export function initClientWebsocket() {
-	return io('wss://quizalt.seda.club/quizClient', {
+	return io('ws://quizalt.seda.club/quizClient', {
 		path: '/api/socket.io', // api 경로 뒤의 socket.io 경로
 		transports: ['websocket']
 	});
 }
 
 export function initHostWebsocket() {
-	return io('wss://quizalt.seda.club/quizHost', {
+	return io('ws://quizalt.seda.club/quizHost', {
 		path: '/api/socket.io',
 		transports: ['websocket']
 	});
 }
 
 export function initVideoPlayerWebsocket() {
-	return io('wss://quizalt.seda.club/quizVideoPlayer', {
+	return io('ws://quizalt.seda.club/quizVideoPlayer', {
 		path: '/api/socket.io',
 		transports: ['websocket']
 	});
