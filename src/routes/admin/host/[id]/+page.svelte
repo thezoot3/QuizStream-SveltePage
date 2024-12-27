@@ -122,7 +122,7 @@
 			<span class="text-2xl font-medium text-[#aaaaaa]">Leaderboard</span>
 			<div class="flex flex-col gap-4 rounded-xl bg-[#222222] p-4 overflow-y-scroll">
 				{#if currentUser.length > 0}
-					{#each currentUser as user}
+					{#each currentUser.sort((a, b) => a.earnedPoints - b.earnedPoints) as user}
 						{#if user}
 							<div class="flex items-center justify-between rounded-xl bg-[#2e2e2e] px-4 py-3">
 								<div class="flex flex-col gap-1">
