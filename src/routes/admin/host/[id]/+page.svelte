@@ -3,7 +3,6 @@
 	import PreviewMonitor from '../../../../component/PreviewMonitor.svelte';
 	import { fetchQuiz, type Quiz } from '$lib/fetch/quiz';
 	import CancelIcon from '../../../../static/CancelIcon.svelte';
-	import EditIcon from '../../../../static/EditIcon.svelte';
 	import OpenIcon from '../../../../static/OpenIcon.svelte';
 	import { fetchUserByProgress, fetchProgramProgress, type ProgramProgress } from '$lib/fetch/programProgress';
 	import { onDestroy, onMount } from 'svelte';
