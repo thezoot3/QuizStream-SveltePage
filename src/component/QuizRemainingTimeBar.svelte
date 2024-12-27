@@ -2,8 +2,8 @@
 
 	import { ProgressBar } from '@prgm/sveltekit-progress-bar';
 
-	export let maxDuration: number = 0
-	export let remainingDuration: number = 0
+	export let maxDuration: number = 0;
+	export let remainingDuration: number = 0;
 
 </script>
 <div class="w-full flex flex-col gap-2">

@@ -54,7 +54,7 @@
 
 	function createNewQuizByTimestampHandler(timestamp: number) {
 		createQuiz = true;
-		presetQuizData = { questionTriggerTime: timestamp };
+		presetQuizData = { questionTriggerTime: timestamp, videoId: selectedVideo };
 	}
 
 	//upload new video select from local device
@@ -116,7 +116,6 @@
 					<RefreshIcon />
 				</button>
 			</div>
-			data.program = await fetchProgram(data.program._id);
 			<QuizList quizIdList={data.program.quizList} editQuizHandler={editHandler} deleteQuizHandler={deleteHandler} />
 		</div>
 		<div class="col-span-2 row-span-1 w-full h-full flex flex-col gap-4">
