@@ -47,15 +47,12 @@
 		});
 
 		socket.on('setVideoTimestamp', (d: { timestamp: number }) => {
-			video.currentTime = d.timestamp;
+			currentTimestamp = d.timestamp;
 		});
 
-		socket.on('pause', async () => {
-			video.pause();
-		});
-
-		socket.on('unpause', async () => {
-			await video.play();
+		socket.on('preloadNextVideo', async (d: { videoId: string }) => {
+			preloadThumbnail = getThumbnailURL(d.videoId, cdnURL);
+			console.log('preloadNextVideo', d.videoId);
 		});
 	});
 
@@ -88,7 +85,7 @@
 <div class="z-50 w-screen h-screen bg-black absolute top-0 left-0 items-center justify-center flex">
 	{#if wsConnected}
 		{#await getVideoURL(currentVideoId, cdnURL) then url}
-			{#if url && currentVideoId}
+			{#if url}
 				<video class="z-50 w-screen h-screen" bind:this={video} controls
 							 src={url} preload="metadata" autoplay on:timeupdate={timeUpdateHandler}
 							 on:ended={videoEndHandler} poster={getThumbnailURL(currentVideoId, cdnURL)}

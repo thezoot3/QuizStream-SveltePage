@@ -37,7 +37,6 @@
 		controls
 		poster={getThumbnailURL(videoId)}
 		preload="auto"
-		autoplay
 	></video>
 	{#if video}
 		{#await fetchVideoInfo(videoId)}
