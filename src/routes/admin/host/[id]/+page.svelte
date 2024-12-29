@@ -5,6 +5,7 @@
 	import CancelIcon from '../../../../static/CancelIcon.svelte';
 	import OpenIcon from '../../../../static/OpenIcon.svelte';
 	import { fetchUserByProgress, fetchProgramProgress, type ProgramProgress } from '$lib/fetch/programProgress';
+	import { fetchProgram } from '$lib/fetch/program';
 	import { onDestroy, onMount } from 'svelte';
 	import {
 		initHostWebsocket
@@ -17,6 +18,8 @@
 		type QuestionResponse
 	} from '$lib/fetch/questionResponse';
 	import StopIcon from '../../../../static/StopIcon.svelte';
+	import PauseIcon from '../../../../static/PauseIcon.svelte';
+	import { constantDigit } from '$lib/utils';
 
 	export let data: { programProgress: ProgramProgress };
 
@@ -107,6 +110,22 @@
 			socket.emit('quitUser', { programProgressId: data.programProgress._id, userId });
 		};
 	}
+
+	function pauseHandler() {
+		socket.emit('pause', { programProgressId: data.programProgress._id });
+	}
+
+	function unpauseHandler() {
+		socket.emit('unpause', { programProgressId: data.programProgress._id });
+	}
+
+	function nextQuizHandler() {
+		socket.emit('nextQuiz', { programProgressId: data.programProgress._id });
+	}
+
+	function previousQuizHandler() {
+		socket.emit('previousQuiz', { programProgressId: data.programProgress._id });
+	}
 </script>
 {#if wsConnected && currentProgramProgress && currentQuiz}
 	<div class="grid h-[80%] w-[80%] grid-cols-3 grid-rows-5 gap-8">
@@ -114,6 +133,18 @@
 			<span class="text-2xl font-medium text-[#aaaaaa]">Video Control</span>
 			{#if currentQuiz}
 				<PreviewMonitor videoId={currentVideoId} currentVideoTime={currentProgramProgress.currentVideoTimestamp} />
+				<div class="flex items-center justify-center gap-4">
+					<div class="flex justify-center items-center h-full gap-2">
+						<span class="text-2xl">Quiz Index</span>
+						<span class="text-2xl text-gray-300">{currentProgramProgress.currentQuizIndex + 1}</span>
+						<span>/</span>
+						{#await fetchProgram(currentProgramProgress.program) then program}
+							<span class="text-2xl text-gray-300">{program.quizList.length}</span>
+						{/await}
+					</div>
+					<button class="text-xl underline-offset-2 underline" on:click={previousQuizHandler}>Previous Quiz</button>
+					<button class="text-xl underline-offset-2 underline" on:click={nextQuizHandler}>Next Quiz</button>
+				</div>
 			{:else}
 				<span class="text-2xl font-medium text-[#cccccc]">No Quiz to appear</span>
 			{/if}
@@ -197,7 +228,7 @@
 						<PlayIcon />
 					</button>
 				{:else if !currentProgramProgress.isEnd}
-					<button class="flex items-center col-span-2 justify-center bg-red-900 rounded-xl text-2xl"
+					<button class="flex items-center col-span-1 justify-center bg-red-900 rounded-xl text-2xl"
 									on:click={stopHandler}>
 						<StopIcon />
 					</button>
@@ -205,6 +236,19 @@
 					<button class="flex items-center col-span-2 justify-center bg-[#182C25] rounded-xl text-2xl">
 						<span class="text-xl font-medium">Program Ends</span>
 					</button>
+				{/if}
+				{#if currentProgramProgress.isStarted && !currentProgramProgress.isEnd}
+					{#if currentProgramProgress.isPaused}
+						<button class="flex items-center col-span-1 justify-center bg-[#182C25] rounded-xl text-2xl"
+										on:click={pauseHandler}>
+							<PlayIcon />
+						</button>
+					{:else}
+						<button class="flex items-center col-span-1 justify-center bg-[#306844] rounded-xl text-2xl"
+										on:click={unpauseHandler}>
+							<PauseIcon />
+						</button>
+					{/if}
 				{/if}
 				<button on:click={() => window.open(`/admin/videoPlayer/${data.programProgress._id}`, '_blank')}
 								class="flex items-center col-span-1 justify-center bg-[#2e2e2e] rounded-xl text-2xl">

@@ -6,7 +6,8 @@
 	export let currentVideoTime: number = 0;
 	export let editing: boolean = false;
 
-	export let createQuizHandler: (timestamp: number) => void;
+	export let createQuizHandler: (timestamp: number) => void = () => {
+	};
 
 	let video: HTMLVideoElement;
 
@@ -36,6 +37,7 @@
 		controls
 		poster={getThumbnailURL(videoId)}
 		preload="auto"
+		autoplay
 	></video>
 	{#if video}
 		{#await fetchVideoInfo(videoId)}

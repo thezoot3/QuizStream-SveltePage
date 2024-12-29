@@ -47,12 +47,15 @@
 		});
 
 		socket.on('setVideoTimestamp', (d: { timestamp: number }) => {
-			currentTimestamp = d.timestamp;
+			video.currentTime = d.timestamp;
 		});
 
-		socket.on('preloadNextVideo', async (d: { videoId: string }) => {
-			preloadThumbnail = getThumbnailURL(d.videoId, cdnURL);
-			console.log('preloadNextVideo', d.videoId);
+		socket.on('pause', async () => {
+			video.pause();
+		});
+
+		socket.on('unpause', async () => {
+			await video.play();
 		});
 	});
 
@@ -76,7 +79,6 @@
 	}
 
 	function videoEndHandler() {
-
 		socket.emit('videoEnd', { programProgressId: data.programProgress._id });
 	}
 
@@ -86,13 +88,12 @@
 <div class="z-50 w-screen h-screen bg-black absolute top-0 left-0 items-center justify-center flex">
 	{#if wsConnected}
 		{#await getVideoURL(currentVideoId, cdnURL) then url}
-			{#if url}
+			{#if url && currentVideoId}
 				<video class="z-50 w-screen h-screen" bind:this={video} controls
 							 src={url} preload="metadata" autoplay on:timeupdate={timeUpdateHandler}
 							 on:ended={videoEndHandler} poster={getThumbnailURL(currentVideoId, cdnURL)}
 							 on:play={videoStartHandler}></video>
 			{/if}
-
 		{/await}
 	{/if}
 </div>

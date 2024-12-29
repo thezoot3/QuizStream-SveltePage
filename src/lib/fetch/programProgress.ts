@@ -26,6 +26,8 @@ export interface ProgramProgress {
 	isOnSubVideo: boolean;
 
 	currentSubVideo: number;
+
+	isPaused: boolean;
 }
 
 const API_URL = '/api/programProgress';
