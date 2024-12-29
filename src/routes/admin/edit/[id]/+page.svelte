@@ -69,7 +69,7 @@
 			if (file) {
 				const formData = new FormData();
 				formData.append('video', file);
-				fetch('/cdn/upload', {
+				fetch('http://localhost:3200/cdn/upload', {
 					method: 'POST',
 					body: formData
 				}).then(res => res.json()).then(async (data) => {

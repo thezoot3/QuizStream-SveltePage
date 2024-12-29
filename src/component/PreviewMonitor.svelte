@@ -32,7 +32,7 @@
 {#if videoId}
 	<video
 		bind:this={video}
-		src={`/cdn/videos/${videoId}`}
+		src={`http://localhost:3200/cdn/videos/${videoId}`}
 		class="max-h-[80%]"
 		controls
 		poster={getThumbnailURL(videoId)}
