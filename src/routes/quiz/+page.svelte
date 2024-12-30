@@ -92,6 +92,10 @@
 			goto('/');
 			alert('관리자에 의해 퇴장 처리되었습니다.');
 		});
+
+		socket.onAny((event, ...args) => {
+			console.log(event, args);
+		});
 	});
 
 	onDestroy(() => {

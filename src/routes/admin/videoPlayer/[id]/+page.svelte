@@ -54,6 +54,10 @@
 			preloadThumbnail = getThumbnailURL(d.videoId, cdnURL);
 			console.log('preloadNextVideo', d.videoId);
 		});
+
+		socket.onAny((event, ...args) => {
+			console.log(event, args);
+		});
 	});
 
 	onDestroy(() => {

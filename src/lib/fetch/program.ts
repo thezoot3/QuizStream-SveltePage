@@ -4,7 +4,7 @@ export interface Program {
 	quizList: string[];
 }
 
-const API_URL = '/api/program';
+const API_URL = 'https://quiz.seda.club/api/program';
 
 export async function fetchPrograms(fetchFunc: typeof fetch = fetch): Promise<Program[]> {
 	const response = await fetchFunc(API_URL);

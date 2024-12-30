@@ -12,7 +12,7 @@
 
 	$: {
 		if (gameCode.length === 6) {
-			fetch('/api/programProgress/joinCode/' + gameCode)
+			fetch('https://quiz.seda.club/api/programProgress/joinCode/' + gameCode)
 				.then(res => res.json())
 				.then((json: ProgramProgressResponse) => {
 					gameInfo.set({ programProgressId: json._id });

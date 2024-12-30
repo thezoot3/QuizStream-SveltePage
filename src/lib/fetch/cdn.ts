@@ -4,21 +4,23 @@ export interface VideoInfo {
 	videoId: string;
 }
 
-export async function fetchFileLists(url: string = '') {
-	const response = await fetch(url + '/cdn/video-info');
+const API_URL = 'https://quiz.seda.club/cdn';
+
+export async function fetchFileLists(url: string = API_URL): Promise<VideoInfo[]> {
+	const response = await fetch(url + '/video-info');
 	return await response.json();
 }
 
-export function getThumbnailURL(videoId: string, url: string = '') {
-	return url + '/cdn/thumbnail/' + videoId;
+export function getThumbnailURL(videoId: string, url: string = API_URL) {
+	return url + '/thumbnail/' + videoId;
 }
 
-export async function getVideoURL(videoId: string, url: string = '') {
+export async function getVideoURL(videoId: string, url: string = API_URL): Promise<string> {
 	const videoFile = await fetchVideoInfo(videoId);
-	return url + '/cdn/videos/' + videoFile.filename;
+	return url + '/videos/' + videoFile.filename;
 }
 
-export async function fetchVideoInfo(videoId: string, url: string = ''): Promise<VideoInfo> {
-	const response = await fetch(`${url}/cdn/video-info/${videoId}`);
+export async function fetchVideoInfo(videoId: string, url: string = API_URL): Promise<VideoInfo> {
+	const response = await fetch(`${url}/video-info/${videoId}`);
 	return await response.json();
 }

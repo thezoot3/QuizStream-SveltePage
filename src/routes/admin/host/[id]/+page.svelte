@@ -74,6 +74,10 @@
 		socket.on('programEnded', async () => {
 			currentProgramProgress = await fetchProgramProgress(data.programProgress._id);
 		});
+
+		socket.onAny((event, ...args) => {
+			console.log(event, args);
+		});
 	});
 
 	onDestroy(() => {

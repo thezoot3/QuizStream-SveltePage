@@ -16,7 +16,7 @@ export interface QuestionResponse {
 	answeredAt: Date;
 }
 
-const API_URL = '/api/questionResponse';
+const API_URL = 'https://quiz.seda.club/api/questionResponse';
 
 export async function fetchQuestionResponses(
 	fetchFunc: typeof fetch = fetch

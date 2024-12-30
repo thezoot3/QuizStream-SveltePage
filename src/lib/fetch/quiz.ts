@@ -25,7 +25,7 @@ export interface CreateQuiz {
 	subVideoByOptions: ({ duration: number; videoId: string } | null)[];
 }
 
-const API_URL = '/api/quiz';
+const API_URL = 'https://quiz.seda.club/api/quiz';
 
 export async function fetchQuizzes(fetchFunc: typeof fetch = fetch): Promise<Quiz[]> {
 	const response = await fetchFunc(API_URL);

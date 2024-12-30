@@ -28,7 +28,7 @@ export interface ProgramProgress {
 	currentSubVideo: number;
 }
 
-const API_URL = '/api/programProgress';
+const API_URL = 'https://quiz.seda.club/api/programProgress';
 
 export async function fetchUserByProgress(
 	id: string,

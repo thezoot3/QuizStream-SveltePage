@@ -24,15 +24,17 @@
 	}
 </script>
 
-<div class="grid grid-cols-2 gap-4 items-center w-full">
-	{#each options as option, index}
-		{#if index === selected}
-			<QuizOptions optionText={option} onClick={clickHandlerFactory(index)} selected={true} />
-		{:else}
-			<QuizOptions optionText={option} onClick={clickHandlerFactory(index)} />
-		{/if}
-	{/each}
-	<div class="w-full rounded-xl col-span-2">
+<div class="flex flex-col gap-4 items-center w-full">
+	<div class="w-full grid grid-cols-2 gap-4">
+		{#each options as option, index}
+			{#if index === selected}
+				<QuizOptions optionText={option} onClick={clickHandlerFactory(index)} selected={true} />
+			{:else}
+				<QuizOptions optionText={option} onClick={clickHandlerFactory(index)} />
+			{/if}
+		{/each}
+	</div>
+	<div class="w-full flex items-center justify-between gap-4">
 		{#if selected !== undefined}
 			<button class="flex items-center justify-center h-full bg-[#306844] w-full p-3 rounded-xl text-2xl"
 							on:click={() => clickCallback(selected)}>

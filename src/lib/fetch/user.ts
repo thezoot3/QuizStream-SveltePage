@@ -10,7 +10,7 @@ export interface User {
 	earnedPoints: number;
 }
 
-const API_URL = '/api/user';
+const API_URL = 'https://quiz.seda.club/api/user';
 
 export async function fetchUsers(fetchFunc: typeof fetch = fetch): Promise<User[]> {
 	const response = await fetchFunc(API_URL);
