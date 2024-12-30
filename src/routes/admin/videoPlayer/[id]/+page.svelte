@@ -17,11 +17,11 @@
 	let currentTimestamp: number = 0;
 	let preloadThumbnail: string;
 
-	let cdnURL: string = '';
+	let cdnURL: string = 'https://quiz.seda.club/cdn';
 
 	onMount(() => {
 		const customCdnURL = prompt('Enter CDN URL (empty for default)');
-		if (customCdnURL) {
+		if (customCdnURL && customCdnURL.length > 0) {
 			cdnURL = customCdnURL;
 		}
 		socket = initVideoPlayerWebsocket();

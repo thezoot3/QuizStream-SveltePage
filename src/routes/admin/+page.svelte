@@ -13,9 +13,11 @@
 		programList = await fetchPrograms();
 	});
 
-	async function deleteProgramHandler(programId: string) {
-		await deleteProgram(programId);
-		programList = await fetchPrograms();
+	function deleteProgramFactory(programId: string) {
+		return async () => {
+			await deleteProgram(programId);
+			programList = await fetchPrograms();
+		};
 	}
 
 	async function createProgramHandler() {
@@ -42,7 +44,7 @@
 				<button class="text-xl" on:click={() => goto("/admin/edit/" + program._id)}>
 					<EditIcon />
 				</button>
-				<button class="text-xl" on:click={deleteProgramHandler}>
+				<button class="text-xl" on:click={deleteProgramFactory(program._id)}>
 					<DeleteIcon />
 				</button>
 			</div>
