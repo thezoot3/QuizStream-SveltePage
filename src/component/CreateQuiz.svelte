@@ -202,13 +202,9 @@
 						<span class="text-xl font-light text-[#999999] col-span-1">{index + 1}.</span>
 						<select class=" bg-[#2e2e2e] text-gray-300 rounded-lg w-full text-lg p-3 col-span-6"
 										bind:value={subVideoIdByOptions[index]} name="subVideoId">
-							<option value={null}>None</option>
+							<option value={null} selected>None</option>
 							{#each availableMedia as media}
-								{#if media.videoId === presetData.subVideoByOptions[index]?.videoId}
-									<option value={media.videoId} selected>{media.filename}</option>
-								{:else}
-									<option value={media.videoId}>{media.filename}</option>
-								{/if}
+								<option value={media.videoId}>{media.filename}</option>
 							{/each}
 						</select>
 					{/each}
