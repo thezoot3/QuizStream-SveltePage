@@ -225,7 +225,7 @@
 								>
 									<span class="text-lg">{option}</span>
 									<span class="text-sm font-light">{quizResponseCountByOptions[index]}
-										명 ({quizResponseCountByOptions[index] ? Math.round(currentQuizResponse.length / quizResponseCountByOptions[index] * 100) : 0}
+										명 ({quizResponseCountByOptions[index] ? Math.round(quizResponseCountByOptions[index] / currentQuizResponse.length * 100) : 0}
 										%)</span>
 								</div>
 							{/each}
