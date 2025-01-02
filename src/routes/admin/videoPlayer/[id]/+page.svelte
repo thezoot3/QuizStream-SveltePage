@@ -110,7 +110,7 @@
 			{#each videoIdWaitingList as videoId, index}
 				{#if index === 0}
 					<video
-						class="w-full aspect-auto object-cover z-50"
+						class="w-screen aspect-auto object-cover z-50"
 						bind:this={video}
 						src={getVideoURL(videoId, cdnURL)}
 						preload="auto"

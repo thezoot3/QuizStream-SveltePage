@@ -11,17 +11,6 @@
 
 	let video: HTMLVideoElement;
 
-	$: {
-		if (video) {
-			video.addEventListener('timeupdate', () => {
-				const roundedTime = Math.floor(video.currentTime);
-				if (roundedTime !== currentVideoTime) {
-					currentVideoTime = roundedTime;
-				}
-			});
-		}
-	}
-
 	function createQuizFactory() {
 		return () => {
 			createQuizHandler(currentVideoTime);
