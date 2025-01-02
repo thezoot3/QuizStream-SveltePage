@@ -4,7 +4,6 @@
 	import { type ProgramProgress } from '$lib/fetch/programProgress';
 	import type { Socket } from 'socket.io-client';
 	import { getThumbnailURL, getVideoURL } from '$lib/fetch/cdn';
-	import type { Quiz } from '$lib/fetch/quiz';
 
 	export let data: { programProgress: ProgramProgress };
 
@@ -14,7 +13,7 @@
 	let timestamp: number = 0;
 	let wsConnected: boolean = false;
 
-	let videoIdWaitingList: string[] = [];
+	let currentVideoId: string = '';
 
 	let preloadImg: HTMLImageElement;
 
@@ -37,22 +36,17 @@
 		});
 
 		socket.on('startVideo', async (d: { videoId: string }) => {
-			if (!videoIdWaitingList.includes(d.videoId)) {
-				videoIdWaitingList = [...videoIdWaitingList, d.videoId];
-				await video.play();
-			} else {
-				await video.play();
-			}
+			currentVideoId = d.videoId;
+			video.currentTime = 0;
+			await video.play();
 			socket.emit('videoTimestamp', { programProgressId: data.programProgress._id, timestamp: 0 });
 		});
 
 		socket.on('programEnd', async () => {
-			videoIdWaitingList = [];
+			currentVideoId = '';
 		});
 
 		socket.on('preloadNextVideo', async (d: { videoId: string }) => {
-			if (videoIdWaitingList.includes(d.videoId)) return;
-			videoIdWaitingList = [...videoIdWaitingList, d.videoId];
 			preloadImg.src = getThumbnailURL(d.videoId);
 			console.log('preloadNextVideo', d.videoId);
 		});
@@ -76,37 +70,22 @@
 	}
 
 	function videoEndHandler() {
-		videoIdWaitingList = videoIdWaitingList.slice(1);
 		socket.emit('videoEnd', { programProgressId: data.programProgress._id });
 	}
 </script>
 <svelte:window on:keydown={e => {if(e.key === " ") video.paused ? video.play() : video.pause()}} />
 <div class="z-50 w-screen bg-black absolute top-0 left-0 items-center justify-center flex relative">
 	{#if wsConnected}
-		{#if videoIdWaitingList.length > 0}
-			<img bind:this={preloadImg} class="absolute inset-0 w-screen aspect-auto object-cover z-30" />
-			{#each videoIdWaitingList as videoId, index}
-				{#if index === 0}
-					<video
-						class="w-screen aspect-auto object-cover z-50"
-						bind:this={video}
-						src={getVideoURL(videoId, cdnURL)}
-						preload="auto"
-						playsinline
-						on:timeupdate={timeUpdateHandler}
-						on:ended={videoEndHandler}
-					></video>
-				{:else}
-					<video
-						class="absolute inset-0 w-screen aspect-auto object-cover z-0 hidden"
-						src={getVideoURL(videoId, cdnURL)}
-						preload="auto"
-						playsinline
-						poster={getThumbnailURL(videoId)}
-					></video>
-				{/if}
-			{/each}
-		{/if}
+		<img bind:this={preloadImg} class="absolute inset-0 w-screen aspect-auto object-cover z-30" />
+		<video
+			class="w-screen aspect-auto object-cover z-50"
+			bind:this={video}
+			src={getVideoURL(currentVideoId, cdnURL)}
+			preload="auto"
+			playsinline
+			on:timeupdate={timeUpdateHandler}
+			on:ended={videoEndHandler}
+		></video>
 	{/if}
 </div>
 <style>
