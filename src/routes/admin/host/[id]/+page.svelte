@@ -215,29 +215,38 @@
 					{/if}
 				</div>
 				<span class="text-lg text-[#777777]">{currentQuiz.questionText}</span>
-				<div class="grid grid-cols-2 gap-6 h-full">
-					{#if currentQuizResponse.length > 0}
-						{#each currentQuiz.options as option, index}
-							<div
-								class="flex flex-col items-center rounded-xl p-2 shadow-inner bg-[#2e2e2e] justify-center"
-								style={`background: linear-gradient(to right, #4C3BCF ${Math.round(currentQuizResponse.length / quizResponseCountByOptions[index] * 100)}%, #3e3e3e ${100 - Math.round(currentQuizResponse.length / quizResponseCountByOptions[index] * 100)}%)`}
-							>
-								<span class="text-lg">{option}</span>
-								<span class="text-sm font-light">{quizResponseCountByOptions[index]}
-									명 ({quizResponseCountByOptions[index] ? Math.round(currentQuizResponse.length / quizResponseCountByOptions[index] * 100) : 0}
-									%)</span>
-							</div>
+				{#if currentQuiz.options.length > 1}
+					<div class="grid grid-cols-2 gap-6 h-full">
+						{#if currentQuizResponse.length > 0}
+							{#each currentQuiz.options as option, index}
+								<div
+									class="flex flex-col items-center rounded-xl p-2 shadow-inner bg-[#2e2e2e] justify-center"
+									style={`background: linear-gradient(to right, #4C3BCF ${Math.round(currentQuizResponse.length / quizResponseCountByOptions[index] * 100)}%, #3e3e3e ${100 - Math.round(currentQuizResponse.length / quizResponseCountByOptions[index] * 100)}%)`}
+								>
+									<span class="text-lg">{option}</span>
+									<span class="text-sm font-light">{quizResponseCountByOptions[index]}
+										명 ({quizResponseCountByOptions[index] ? Math.round(currentQuizResponse.length / quizResponseCountByOptions[index] * 100) : 0}
+										%)</span>
+								</div>
+							{/each}
+						{:else}
+							{#each currentQuiz.options as option}
+								<div
+									class="flex flex-col items-center rounded-xl p-4 shadow-inner bg-[#2e2e2e] justify-center"
+								>
+									<span class="text-lg">{option}</span>
+								</div>
+							{/each}
+						{/if}
+					</div>
+				{:else}
+					<div class="w-full h-full flex p-6 flex-col gap-4 overflow-y-scroll">
+						{#each currentQuizResponse as response}
+							<span class="text-xl">{response.submittedAnswer}</span>
 						{/each}
-					{:else}
-						{#each currentQuiz.options as option}
-							<div
-								class="flex flex-col items-center rounded-xl p-4 shadow-inner bg-[#2e2e2e] justify-center"
-							>
-								<span class="text-lg">{option}</span>
-							</div>
-						{/each}
-					{/if}
-				</div>
+					</div>
+				{/if}
+
 			</div>
 		</div>
 		<div class="flex flex-col gap-6">

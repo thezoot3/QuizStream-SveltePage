@@ -72,10 +72,6 @@
 	}
 
 	async function submitHandler() {
-		if (presetData.options && presetData.options.length < 2) {
-			alert('퀴즈 옵션은 2개 이상이어야 합니다.');
-			return;
-		}
 		if (presetData.options && presetData.options.length !== new Set(presetData.options).size) {
 			alert('중복된 퀴즈 옵션이 있습니다.');
 			return;
