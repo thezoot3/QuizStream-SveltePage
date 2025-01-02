@@ -78,29 +78,6 @@
 		videoIdWaitingList = videoIdWaitingList.slice(1);
 		socket.emit('videoEnd', { programProgressId: data.programProgress._id });
 	}
-
-	$:{
-		if (video) {
-			video.addEventListener('loadstart', () => {
-				video.pause();
-			});
-
-// 충분한 데이터가 로드되면 재생 시작
-			video.addEventListener('canplay', () => {
-				video.play();
-			});
-
-// 버퍼링 발생 시 처리
-			video.addEventListener('waiting', () => {
-				video.pause();
-			});
-
-// 버퍼링이 끝나면 재생 재개
-			video.addEventListener('playing', () => {
-				video.play();
-			});
-		}
-	}
 </script>
 <svelte:window on:keydown={e => {if(e.key === " ") video.paused ? video.play() : video.pause()}} />
 <div class="z-50 w-screen bg-black absolute top-0 left-0 items-center justify-center flex relative">
