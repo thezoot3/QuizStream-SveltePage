@@ -16,7 +16,7 @@ export function getThumbnailURL(videoId: string, url: string = API_URL) {
 }
 
 export function getVideoURL(videoId: string, url: string = API_URL): string {
-	return url + '/videos/' + videoId;
+	return url + '/videos/' + videoId + '.mp4';
 }
 
 export async function fetchVideoInfo(videoId: string, url: string = API_URL): Promise<VideoInfo> {
