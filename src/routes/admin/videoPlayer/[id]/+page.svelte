@@ -39,6 +39,7 @@
 		socket.on('startVideo', async (d: { videoId: string }) => {
 			if (!videoIdWaitingList.includes(d.videoId)) {
 				videoIdWaitingList = [...videoIdWaitingList, d.videoId];
+				await video.play();
 			} else {
 				await video.play();
 			}
