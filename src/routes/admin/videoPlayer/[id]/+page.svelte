@@ -80,6 +80,7 @@
 			bind:this={video}
 			src={getVideoURL(currentVideoId, cdnURL)}
 			preload="auto"
+			playsinline
 			autoplay
 			on:timeupdate={timeUpdateHandler}
 			on:ended={videoEndHandler}
