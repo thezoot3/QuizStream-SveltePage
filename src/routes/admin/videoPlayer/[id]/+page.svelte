@@ -37,7 +37,6 @@
 
 		socket.on('startVideo', async (d: { videoId: string }) => {
 			currentVideoId = d.videoId;
-			video.currentTime = 0;
 			socket.emit('videoTimestamp', { programProgressId: data.programProgress._id, timestamp: 0 });
 		});
 
@@ -77,7 +76,6 @@
 		<img bind:this={preloadImg} class="absolute inset-0 w-screen aspect-auto object-cover z-30" />
 		<video
 			class="w-screen aspect-auto object-cover z-50"
-			bind:this={video}
 			src={getVideoURL(currentVideoId, cdnURL)}
 			preload="auto"
 			playsinline
