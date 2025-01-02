@@ -7,8 +7,7 @@ export interface Quiz {
 	submittingDuration: number;
 	videoDuration: number;
 	options: string[];
-	correctAnswer: number;
-	points: number;
+	points: number[];
 	subVideoByOptions: ({ duration: number; videoId: string } | null)[];
 }
 
@@ -20,8 +19,7 @@ export interface CreateQuiz {
 	submittingDuration: number;
 	videoDuration: number;
 	options: string[];
-	correctAnswer: number;
-	points: number;
+	points: number[];
 	subVideoByOptions: ({ duration: number; videoId: string } | null)[];
 }
 

@@ -121,7 +121,7 @@
 		}
 	}
 </script>
-<div class="flex items-center justify-center relative">
+<div class="flex items-center justify-center relative w-full">
 	{#if wsConnected}
 		{#if isSubmitting && !questionSubmitted}
 			<div class="flex flex-col items-center drop-shadow-xl rounded-xl w-[80%] bg-[#1e1e1e] text-gray-200 p-6">

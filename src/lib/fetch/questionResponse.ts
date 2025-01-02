@@ -9,8 +9,6 @@ export interface QuestionResponse {
 
 	submittedAnswer: number;
 
-	isCorrect: boolean;
-
 	earnedPoints: number;
 
 	answeredAt: Date;
@@ -47,5 +45,14 @@ export async function fetchQuestionResponsesByProgressAndQuizId(
 	fetchFunc: typeof fetch = fetch
 ): Promise<QuestionResponse[]> {
 	const response = await fetchFunc(`${API_URL}/programProgress/${id}/quiz/${quizId}`);
+	return await response.json();
+}
+
+export async function fetchQuestionResponsesByQuizAndUser(
+	id: string,
+	userId: string,
+	fetchFunc: typeof fetch = fetch
+): Promise<QuestionResponse[]> {
+	const response = await fetchFunc(`${API_URL}/quiz/${id}/user/${userId}`);
 	return await response.json();
 }

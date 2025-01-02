@@ -26,6 +26,8 @@
 
 	let videoInfo: VideoInfo[] = [];
 
+	let currentProgram = data.program;
+
 	function editHandler(quiz: Quiz) {
 		presetQuizData = quiz;
 		createQuiz = true;
@@ -37,8 +39,9 @@
 	}
 
 	async function submitQuiz(quiz: Quiz) {
-		await updateProgram(data.program._id, { quizList: Array.from(new Set([...data.program.quizList, quiz._id!])) });
-		data.program = await fetchProgram(data.program._id);
+		await updateProgram(currentProgram._id, { quizList: Array.from(new Set([...currentProgram.quizList, quiz._id!])) });
+		currentProgram = await fetchProgram(currentProgram._id);
+		location.reload();
 	}
 
 	function createNewQuiz() {
@@ -47,10 +50,11 @@
 	}
 
 	async function deleteHandler(quiz: Quiz) {
-		await updateProgram(data.program._id, { quizList: data.program.quizList.filter(q => q !== quiz._id) });
+		await updateProgram(currentProgram._id, { quizList: currentProgram.quizList.filter(q => q !== quiz._id) });
 		await deleteQuiz(quiz._id!);
-		data.program = await fetchProgram(data.program._id);
+		currentProgram = await fetchProgram(currentProgram._id);
 		alert('Deleted');
+		location.reload();
 	}
 
 	function createNewQuizByTimestampHandler(timestamp: number) {
@@ -69,7 +73,7 @@
 			if (file) {
 				const formData = new FormData();
 				formData.append('video', file);
-				fetch('/cdn/upload', {
+				fetch('https://quiz.seda.club/cdn/upload', {
 					method: 'POST',
 					body: formData
 				}).then(res => res.json()).then(async (data) => {
@@ -86,17 +90,19 @@
 	});
 
 	async function startHandler() {
-		const joinCode = prompt('Enter Join Code');
-		if (joinCode) {
-			const progress = await createProgramProgress({ program: data.program._id, joinCode });
+		const joinCode = prompt('Enter Join Code') || '';
+		if (joinCode.length === 6) {
+			const progress = await createProgramProgress({ program: currentProgram._id, joinCode });
 			await goto('/admin/host/' + progress._id);
+		} else {
+			alert('Invalid Join Code. Must be 6 characters long.');
 		}
 	}
 </script>
 {#if createQuiz}
 	<CreateQuiz bind:presetData={presetQuizData} cancel={cancelCreateHandler} submit={submitQuiz} />
 {/if}
-{#if data.program}
+{#if currentProgram}
 	<div class="grid grid-cols-3 grid-rows-4 gap-8 w-[80%] h-[80%]">
 		<div class="col-span-2 row-span-3 w-full gap-4 flex flex-col">
 		<span class="text-2xl font-semibold text-[#999999]">
@@ -113,11 +119,11 @@
 				<button class="text-2xl" on:click={createNewQuiz}>
 					<PlusIcon />
 				</button>
-				<button class="text-2xl" on:click={async () => {data.program = await fetchProgram(data.program._id)}}>
+				<button class="text-2xl" on:click={() => { location.reload() }}>
 					<RefreshIcon />
 				</button>
 			</div>
-			<QuizList quizIdList={data.program.quizList} editQuizHandler={editHandler} deleteQuizHandler={deleteHandler} />
+			<QuizList quizIdList={currentProgram.quizList} editQuizHandler={editHandler} deleteQuizHandler={deleteHandler} />
 		</div>
 		<div class="col-span-2 row-span-1 w-full h-full flex flex-col gap-4">
 			<div class="flex justify-between items-center w-full">
