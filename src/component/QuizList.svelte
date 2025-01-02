@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="flex flex-col justify-center items-center gap-4">
+<div class="flex flex-col gap-4 max-h-full overflow-y-scroll">
 	{#each quizList as quiz, index}
 		<div class="flex w-full justify-between p-4 bg-[#202020] rounded-xl items-center">
 			<div class="flex items-center gap-4">
