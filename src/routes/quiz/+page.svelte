@@ -27,7 +27,7 @@
 		questionText: string,
 		options: string[],
 		submittingDuration: number,
-		points: number
+		points: number[],
 	};
 	let programProgress: ProgramProgress;
 	let remainingDuration: number = 5;
@@ -123,7 +123,7 @@
 </script>
 <div class="flex items-center justify-center relative w-full">
 	{#if wsConnected}
-		{#if isSubmitting && !questionSubmitted}
+		{#if isSubmitting && !questionSubmitted && currentQuiz.questionText !== 'not'}
 			<div class="flex flex-col items-center drop-shadow-xl rounded-xl w-[80%] bg-[#1e1e1e] text-gray-200 p-6">
 				<QuizRemainingTimeBar maxDuration={currentQuiz.submittingDuration} remainingDuration={remainingDuration} />
 				<span class="text-xl font-medium text-white p-6">{currentQuiz.questionText}</span>
