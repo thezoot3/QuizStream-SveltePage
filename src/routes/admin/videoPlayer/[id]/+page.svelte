@@ -72,11 +72,11 @@
 		socket.emit('videoEnd', { programProgressId: data.programProgress._id });
 	}
 </script>
-<div class="z-50 w-screen bg-black items-center justify-center flex relative">
+<div class="z-50 bg-black items-center justify-center flex relative">
 	{#if wsConnected}
 		<img bind:this={preloadImg} class="absolute inset-0 w-screen aspect-auto object-cover z-30" />
 		<video
-			class="w-screen aspect-auto object-cover z-50"
+			class="h-screen z-50"
 			src={getVideoURL(currentVideoId, cdnURL)}
 			bind:this={video}
 			preload="auto"
