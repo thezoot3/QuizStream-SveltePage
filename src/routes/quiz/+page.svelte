@@ -59,6 +59,9 @@
 		socket.on('cueQuestion', async (data: WsCueQuestionEvent) => {
 			const quizId = data.quizId;
 			const quizFetchData = await fetchQuiz(quizId);
+			if (quizFetchData.questionText === 'not') {
+				return;
+			}
 			if (quizFetchData.options.length < 2) {
 				const answer = prompt(quizFetchData.questionText);
 				socket.emit('answer', { quizId, answer });
