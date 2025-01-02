@@ -63,6 +63,13 @@
 	function timeUpdateHandler() {
 		if (timestamp !== Math.round(video.currentTime)) {
 			timestamp = Math.round(video.currentTime);
+			const buffered = video.buffered;
+			if (buffered.length > 0) {
+				const currentBufferEnd = buffered.end(buffered.length - 1);
+				if (currentBufferEnd - video.currentTime < 10) { // 10초 미만으로 버퍼 남았을 때
+					video.load(); // 강제로 버퍼링 시작
+				}
+			}
 			socket.emit('videoTimestamp', { programProgressId: data.programProgress._id, timestamp });
 		}
 	}
@@ -77,6 +84,7 @@
 		<video
 			class="w-screen aspect-auto object-cover z-50"
 			src={getVideoURL(currentVideoId, cdnURL)}
+			bind:this={video}
 			preload="auto"
 			playsinline
 			autoplay
