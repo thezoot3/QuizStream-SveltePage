@@ -72,7 +72,6 @@
 		socket.emit('videoEnd', { programProgressId: data.programProgress._id });
 	}
 </script>
-<svelte:window on:keydown={e => {if(e.key === " ") video.paused ? video.play() : video.pause()}} />
 <div class="z-50 w-screen bg-black items-center justify-center flex relative">
 	{#if wsConnected}
 		<img bind:this={preloadImg} class="absolute inset-0 w-screen aspect-auto object-cover z-30" />
