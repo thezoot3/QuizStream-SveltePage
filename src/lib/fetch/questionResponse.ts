@@ -7,7 +7,7 @@ export interface QuestionResponse {
 
 	quizId: string;
 
-	submittedAnswer: number;
+	submittedAnswer: number | string;
 
 	earnedPoints: number;
 
