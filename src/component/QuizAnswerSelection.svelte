@@ -1,19 +1,17 @@
 <script lang="ts">
 	import QuizOptions from './QuizOptions.svelte';
 	import CheckIcon from '../static/CheckIcon.svelte';
-	import CancelIcon from '../static/CancelIcon.svelte';
-	import { fly } from 'svelte/transition';
 
 	export let options: string[] = [];
 	export let clickCallback: (index: number) => void;
 
-	const submitColor = { enabled: '#306844', disabled: '#182C25' };
-	const cancelColor = { enabled: '#aa3030', disabled: '#662e33' };
-	const iconColor = { enabled: '#cccccc', disabled: '#aaaaaa' };
+	//const submitColor = { enabled: '#306844', disabled: '#182C25' };
+	//const cancelColor = { enabled: '#aa3030', disabled: '#662e33' };
+	//const iconColor = { enabled: '#cccccc', disabled: '#aaaaaa' };
 
 	let selected: number | undefined;
 
-	function clickHandlerFactory(index: number) {
+	function clickHandlerFactory(index: number | undefined) {
 		return () => {
 			if (selected === index) {
 				selected = undefined;

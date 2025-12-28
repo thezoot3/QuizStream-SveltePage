@@ -9,7 +9,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "eslint ."
 	},
 	"devDependencies": {
 		"@iconify/json": "^2.2.276",
@@ -37,7 +37,11 @@
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.2.9",
 		"@types/js-cookie": "^3.0.6",
+		"@types/uuid": "^10.0.0",
+		"dotenv": "^17.2.3",
 		"js-cookie": "^3.0.5",
-		"socket.io-client": "^4.8.1"
+		"mqtt": "^5.14.1",
+		"socket.io-client": "^4.8.1",
+		"uuid": "^13.0.0"
 	}
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import { page } from '$app/stores';
+	import { myScore } from '$lib/store';
 
 	let { children } = $props();
 
@@ -9,11 +9,12 @@
 
 
 <div class="z-40 w-full h-full overflow-y-hidden bg-[#121212] text-gray-200 flex items-center justify-center">
-	{#if !$page.url.pathname.startsWith("/admin/videoPlayer")}
-		<nav class="w-full p-6 flex items-center justify-between absolute top-0">
-			<span class="text-2xl text-white">QuizStream</span>
-		</nav>
-	{/if}
+	<nav class="w-full p-6 flex items-center justify-between flex-col absolute top-0">
+		<span class="text-2xl text-white">QuizStream</span>
+		{#if $myScore?.score}
+			<span class="text-xl text-white animate-bounce">{$myScore.score}점</span>
+		{/if}
+	</nav>
 	{@render children()}
 </div>
 
