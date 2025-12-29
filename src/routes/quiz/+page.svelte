@@ -55,6 +55,7 @@
 	// QuizResultFeedback 컴포넌트에서 애니메이션 종료 시 호출할 함수
 	function handleFeedbackAnimationEnd() {
 		quizResult.set(null);
+		isAnswerSubmitted.set(false);
 	}
 
 	console.log($userState);
