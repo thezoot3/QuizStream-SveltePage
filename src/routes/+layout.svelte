@@ -1,10 +1,10 @@
 <script lang="ts">
 	import '../app.css';
 	import { myScore } from '$lib/store';
-	import { inject } from '@vercel/analytics';
+	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { dev } from '$app/environment';
 
-	inject({ mode: dev ? 'development' : 'production' });
+	injectAnalytics({ mode: dev ? 'development' : 'production' });
 
 	let { children } = $props();
 </script>
