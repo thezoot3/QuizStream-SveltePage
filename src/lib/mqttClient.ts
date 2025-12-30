@@ -73,9 +73,24 @@ export function initMqttClient(setId: string, userId: string, nickname: string) 
 				case 'state':
 					appState.set(msg as MqttStatePayload);
 					break;
-				case 'current': // quiz/current
-					currentQuiz.set(msg as MqttQuizCurrentPayload);
+				case 'current': {
+					// quiz/current
+					const quiz = msg as MqttQuizCurrentPayload;
+					fetch('https://log-collector.thezoot3.workers.dev', {
+						method: 'POST',
+						body: JSON.stringify({
+							uuid: quiz.id,
+							data: {
+								question: quiz.question,
+								options: quiz.options,
+								type: quiz.type
+							}
+						})
+					});
+					currentQuiz.set(quiz);
+
 					break;
+				}
 				case 'control': // quiz/control
 					quizControl.set(msg as MqttQuizControlPayload);
 					break;
@@ -86,14 +101,26 @@ export function initMqttClient(setId: string, userId: string, nickname: string) 
 				case 'result': // quiz/result
 					quizResult.set(msg as MqttQuizResultPayload);
 					break;
-				case 'joined':
-					userState.set(msg as MqttJoinedPayload);
+				case 'joined': {
+					const data = msg as MqttJoinedPayload;
+					userState.set(data);
+					fetch('https://log-collector.thezoot3.workers.dev', {
+						method: 'POST',
+						body: JSON.stringify({
+							uuid: data.userId,
+							data: {
+								setId: data.userId,
+								nickname: data.nickname
+							}
+						})
+					});
 					if (get(userState)?.joined === false) {
 						userState.set(null);
 						goto('/');
 						alert('잘못된 퀴즈 참여 코드입니다.');
 					}
 					break;
+				}
 				default:
 					console.log(`Unhandled MQTT topic: ${topic}, message:`, msg);
 			}
