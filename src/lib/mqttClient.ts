@@ -76,7 +76,7 @@ export function initMqttClient(setId: string, userId: string, nickname: string) 
 				case 'current': {
 					// quiz/current
 					const quiz = msg as MqttQuizCurrentPayload;
-					fetch('https://log-collector.thezoot3.workers.dev', {
+					fetch('https://log-collector.thezoot3.workers.dev/logs', {
 						method: 'POST',
 						body: JSON.stringify({
 							uuid: quiz.id,
@@ -104,7 +104,7 @@ export function initMqttClient(setId: string, userId: string, nickname: string) 
 				case 'joined': {
 					const data = msg as MqttJoinedPayload;
 					userState.set(data);
-					fetch('https://log-collector.thezoot3.workers.dev', {
+					fetch('https://log-collector.thezoot3.workers.dev/logs', {
 						method: 'POST',
 						body: JSON.stringify({
 							uuid: data.userId,
